@@ -3,6 +3,7 @@ pseudo= []
 
 symbol = {}
 icf = []
+pass2 = []
 
 #fetching data from opcode file
 
@@ -64,12 +65,12 @@ def opcodeLine(line):
 
 
 #labals checking in file
-def label(line,location_counter):
+def labal(line,location_counter):
     if(line[0] in symbol.keys()):
         error('already exist in table')
     else:
         symbol[line[0]] = location_counter
-        list.pop(0)
+        line.pop(0)
         return process(line,location_counter)
         
             
@@ -83,7 +84,7 @@ def process(line,location_counter):
         return opcodeLine (line)
     else:
         if(line[0].endswith(':')):
-            return labal(line,locationcounter)
+            return labal(line,location_counter)
         else:
             error(line[0])
         
@@ -118,6 +119,11 @@ for key in symbol.keys():
 print(symbol)
 print(icf)
             
-                
 
-
+#pass2 ---->
+for i in range(0,len(icf)):
+    if(icf[i] in symbol.keys()):
+        pass2.append(symbol[icf[i]])
+    else:
+        pass2.append(icf[i])
+print(pass2)
